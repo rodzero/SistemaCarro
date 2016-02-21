@@ -1,0 +1,16 @@
+li {
+	width: 100%;
+}
+
+.glyphicon-trash {
+	float: right;
+	cursor: pointer;
+	color: red;
+}
+
+.glyphicon-pencil {
+	float: right;
+	cursor: pointer;
+	color: #477DF8;
+	margin-right: 10px;
+}
