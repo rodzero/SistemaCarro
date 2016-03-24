@@ -15,6 +15,6 @@ function Carro(fab, mod, ano, cor, placa, valorDia, valorKm) {
 	})(placa);
 
 	this.toString = function() {
-		return this.fabricante + " " + this.modelo + " " + this.ano + " " + this.cor + " " + "(" + this.placa + ")";
-	}
+		return this.fabricante + ' ' + this.modelo + ' ' + this.ano + ' ' + this.cor + ' ' + '(' + this.placa + ')';
+	};
 };

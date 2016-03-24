@@ -13,7 +13,7 @@ function CarroController(elem, carros) {
         spanDelete.addEventListener('click', function() { removeCarro(copia, carro); }, false);
 
     	lista.appendChild(copia);
-    }
+    };
 
     function editaCarro(carro) {
 		var index = carros.indexOf(carro);
@@ -29,7 +29,7 @@ function CarroController(elem, carros) {
 	}
 
 	function removeCarro(li, carro) {
-		if(window.confirm("Confirma a exclusão do registro?")) {
+		if(window.confirm('Confirma a exclusão do registro?')) {
 			remove(li);
 			carros.splice(carros.indexOf(carro),1);
 			AppCarro.persisteCarros();
@@ -37,12 +37,12 @@ function CarroController(elem, carros) {
 	}
 
     this.atualizaItem = function(tr, carro) {
-        tr.children[0].innerHTML = carro.fabricante == undefined ? "" : carro.fabricante;
-        tr.children[1].innerHTML = carro.modelo == undefined ? "" : carro.modelo;
-        tr.children[2].innerHTML = carro.ano == undefined ? "" : carro.ano;
-        tr.children[3].innerHTML = carro.cor == undefined ? "" : carro.cor;
-        tr.children[4].innerHTML = carro.placa == undefined ? "" : carro.placa;
-    }
+        tr.children[0].innerHTML = carro.fabricante == undefined ? '' : carro.fabricante;
+        tr.children[1].innerHTML = carro.modelo == undefined ? '' : carro.modelo;
+        tr.children[2].innerHTML = carro.ano == undefined ? '' : carro.ano;
+        tr.children[3].innerHTML = carro.cor == undefined ? '' : carro.cor;
+        tr.children[4].innerHTML = carro.placa == undefined ? '' : carro.placa;
+    };
 
     function remove(elem) {
         lista.removeChild(elem);
@@ -59,7 +59,7 @@ function CarroController(elem, carros) {
     	document.getElementById('valor_km').value = '';
 
     	document.getElementById('fabricante').focus();
-    }
+    };
 
     for(i=0;i<carros.length;i++) {
         this.add(carros[i]);

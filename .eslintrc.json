@@ -4,17 +4,17 @@
     },
     /*"extends": "eslint:recommended",*/
     "rules": {
-        "indent": [
+        /*"indent": [
             "error",
-            4
-        ],
+            "tab"
+        ],*/
         "linebreak-style": [
             "error",
             "unix"
         ],
         "quotes": [
             "error",
-            "double"
+            "single"
         ],
         "semi": [
             "error",
