@@ -1,9 +1,11 @@
 var AppCarro = (function SistemaCarro() {
 
 	var app = {};
-	var carroController;
 	var carros = [];
 	var Storage = window.sessionStorage;
+	
+	var carroController;
+	var simulacaoController;
 
 	function salvarCarro(event) {
 		if(document.getElementById('carro_id').value != '') {
@@ -100,6 +102,7 @@ var AppCarro = (function SistemaCarro() {
 		var lista = document.getElementById('lista');
 
 		carroController = new CarroController(lista, carros);
+		simulacaoController = new SimulacaoController(listaSimulacoes, simulacoes);
 
 		edtPlaca.addEventListener('keyup', filtraPlaca, false);
 		edtAno.addEventListener('keyup', filtraAno, false);
