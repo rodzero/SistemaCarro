@@ -9,7 +9,6 @@
 	<script type="text/javascript" src="js/init.js"></script>
 </head>
 <body>
-
 	<div id="content">
         <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a href="#cadastroCarros" data-toggle="tab">Cadastro</a></li>
@@ -17,7 +16,74 @@
         </ul>
         <div id="my-tab-content" class="tab-content">
 			<div id="simulacao" class="tab-pane">
-				simulacao
+				<div class="col-md-3 col-md-offset-1">
+					<h1>Simulações</h1>
+					<table class="table table-striped">
+						<thead>
+							<th>Fabricante</th>
+							<th>Modelo</th>
+							<th>Ano</th>
+							<th>Cor</th>
+							<th>Placa</th>
+							<th></th>
+							<th></th>
+						</thead>
+						<tbody id="listaSimulacoes">
+
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-5 col-md-offset-1">
+					<h1>Nova Simulação</h1>
+	            	<div class="form-group">
+	              		<label for="nomeCliente" class="col-md-3 control-label">Nome:</label>
+	              		<div class="col-md-9">
+	                		<input type="text" class="form-control" id="nomeCliente">
+	              		</div>
+	            	</div>
+	            	<div class="form-group">
+	              		<label for="carroEscolhido" class="col-md-3 control-label">Carro:</label>
+	              		<div class="col-md-9">
+	                		<select id="carroEscolhido" class="form-control">
+	                  		<!-- TODO //-->
+	                		</select>
+	              		</div>
+	            	</div>
+	            	<div class="form-group">
+	              		<label class="col-md-3" for="opcoes">Opção:</label>
+	              		<div class="col-md-9 form-group row" id="opcoes">
+	                		<label class="radio-inline" for="opcaoDias">
+	                  		<input type="radio" class="opcaoSimulacao" name="opcao" id="opcaoDias" value="dias" checked="checked">
+	                  		período
+	                		</label>
+	                		<label class="radio-inline" for="opcaoKm">
+	                  		<input type="radio" class="opcaoSimulacao"  name="opcao" id="opcaoKm" value="km">
+	                  		trajeto
+	                		</label>
+	              		</div>
+	            	</div>
+	            	<div class="form-group" id="opcoesPeriodo">
+	              		<label for="periodo" class="col-md-3 control-label">Período:</label>
+	              		<div class="col-md-9 form-group row" id="periodo">
+	                  		<label class="control-label col-md-2" for="dateInicio">Início:</label>
+	                  		<input class="col-md-4" type="date" id="dateInicio">
+	                  		<label class="control-label col-md-2" for="dateFim">Fim:</label>
+	                  		<input class="col-md-4" type="date" id="dateFim">
+	              		</div>
+	            	</div>
+	            	<div class="form-group" id="opcoesKm">
+	              		<label for="trajeto" class="col-md-3 control-label">Trajeto:</label>
+	              		<div class="col-md-9 form-group row" id="trajeto">
+	                  		<label class="control-label col-md-3" for="origem">Origem:</label>
+	                  		<input class="col-md-3" type="text" id="origem">
+	                  		<label class="control-label col-md-3" for="destino">Destino:</label>
+	                  		<input class="col-md-3" type="text" id="destino">
+	              		</div>
+	            	</div>
+	            	<div id="col-md-12">
+	              		<button class="btn btn-primary" type="button" id="btnAdicionarSimulacao">Simular</button>
+	            	</div>
+				</div>
 			</div>
 			<div id="cadastroCarros" class="tab-pane active">
 				<div class="col-md-5 col-md-offset-1">
@@ -111,11 +177,5 @@
 			</div>
         </div>
     </div>
-
-	<script type="text/javascript">
-        $(function () {
-            $('#tabs a:first').tab('show');
-        })
-    </script>
 </body>
 </html>

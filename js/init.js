@@ -15,6 +15,7 @@ function init() {
         loadScript('bower_components/bootstrap/dist/js/bootstrap.js');
     });
     loadScript('js/carro.js');
+    loadScript('js/simulacao.js');
     loadScript('js/tpc.js', function() {
         loadScript('js/CarroController.js', function() {
             loadScript('js/sistemaCarro.js', function() {
