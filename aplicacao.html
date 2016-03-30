@@ -45,8 +45,12 @@
 	              		<label for="carroEscolhido" class="col-md-3 control-label">Carro:</label>
 	              		<div class="col-md-9">
 	                		<select id="carroEscolhido" class="form-control">
-	                  		<!-- TODO //-->
+
 	                		</select>
+
+							<template id="carroOpcaoItem">
+								<option value="{{codigo}}">{{fabricante}} - {{modelo}}</option>
+							</template>
 	              		</div>
 	            	</div>
 	            	<div class="form-group">
@@ -73,11 +77,15 @@
 	            	</div>
 	            	<div class="form-group" id="opcoesKm">
 	              		<label for="trajeto" class="col-md-3 control-label">Trajeto:</label>
-	              		<div class="col-md-9 form-group row" id="trajeto">
-	                  		<label class="control-label col-md-3" for="origem">Origem:</label>
-	                  		<input class="col-md-3" type="text" id="origem">
-	                  		<label class="control-label col-md-3" for="destino">Destino:</label>
-	                  		<input class="col-md-3" type="text" id="destino">
+	              		<div class="col-md-9 form-group" id="trajeto">
+							<div class="row">
+		                  		<label class="control-label col-md-3" for="origem">Origem:</label>
+		                  		<input class="col-md-9" type="text" id="origem">
+							</div>
+							<div class="row">
+								<label class="control-label col-md-3" for="destino">Destino:</label>
+								<input class="col-md-9" type="text" id="destino">
+							</div>
 	              		</div>
 	            	</div>
 	            	<div id="col-md-12">

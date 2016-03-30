@@ -2,8 +2,9 @@ var AppCarro = (function SistemaCarro() {
 
 	var app = {};
 	var carros = [];
+	var simulacoes = [];
 	var Storage = window.sessionStorage;
-	
+
 	var carroController;
 	var simulacaoController;
 
@@ -100,6 +101,7 @@ var AppCarro = (function SistemaCarro() {
 		var edtValorKm = document.getElementById('valor_km');
 
 		var lista = document.getElementById('lista');
+		var listaSimulacoes = document.getElementById('listaSimulacoes');
 
 		carroController = new CarroController(lista, carros);
 		simulacaoController = new SimulacaoController(listaSimulacoes, simulacoes);
@@ -115,13 +117,19 @@ var AppCarro = (function SistemaCarro() {
 	}
 
 	app.init = function() {
-		console.log('AppCarro.init');
 		init();
 	};
 	app.getCatalog = function() {
-		console.log('AppCarro.getCatalog');
 		return carros;
 	};
+	app.getCarro = function(codigo) {
+		for (var i = 0; i < carros.length; i++) {
+			if(carros[i].codigo == codigo)
+			return carros[i];
+		}
+		
+		return undefined;
+	}
 
 	return app;
 })();
