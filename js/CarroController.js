@@ -19,53 +19,55 @@ function CarroController(elem, carros) {
     };
 
     controller.salvarCarro = function(event) {
-		if(document.getElementById('carro_id').value != '') {
-			var carro = AppCarro.getCarro(document.getElementById('carro_id').value);
+        if(document.getElementById('carro_id').value != '') {
+            var carro = AppCarro.getCarro(document.getElementById('carro_id').value);
 
-			carro.fabricante = document.getElementById('fabricante').value;
-			carro.modelo = document.getElementById('modelo').value;
-			carro.ano = document.getElementById('ano').value;
-			carro.cor = document.getElementById('cor').value;
-			carro.placa = document.getElementById('placa').value;
-			carro.valorDia = document.getElementById('valor_dia').value;
-			carro.valorKm = document.getElementById('valor_km').value;
-		}
-		else {
-			var novoCarro = new Carro(
-				document.getElementById('fabricante').value,
-				document.getElementById('modelo').value,
-				document.getElementById('ano').value,
-				document.getElementById('cor').value,
-				document.getElementById('placa').value,
-				document.getElementById('valor_dia').value,
-				document.getElementById('valor_km').value
-				);
+            carro.fabricante = document.getElementById('fabricante').value;
+            carro.modelo = document.getElementById('modelo').value;
+            carro.ano = document.getElementById('ano').value;
+            carro.cor = document.getElementById('cor').value;
+            carro.placa = document.getElementById('placa').value;
+            carro.valorDia = document.getElementById('valor_dia').value;
+            carro.valorKm = document.getElementById('valor_km').value;
+        }
+        else {
+            var novoCarro = new Carro(
+                document.getElementById('fabricante').value,
+                document.getElementById('modelo').value,
+                document.getElementById('ano').value,
+                document.getElementById('cor').value,
+                document.getElementById('placa').value,
+                document.getElementById('valor_dia').value,
+                document.getElementById('valor_km').value
+            );
 
-			AppCarro.getCatalog().push(novoCarro);
-			controller.adicionaCarroLista(novoCarro);
-		}
+            AppCarro.getCatalog().push(novoCarro);
+            controller.adicionaCarroLista(novoCarro);
+        }
 
-		AppCarro.persisteCarros();
-	};
+        AppCarro.persisteCarros();
+        AppCarro.mostraNotificacao('Cadastro de Carros', 'Carro salvo com sucesso!', 'success');
+    };
 
     function editaCarro(carro) {
-		document.getElementById('carro_id').value = carro.codigo;
-		document.getElementById('fabricante').value = carro.fabricante;
-		document.getElementById('modelo').value = carro.modelo;
-		document.getElementById('ano').value = carro.ano;
-		document.getElementById('cor').value = carro.cor;
-		document.getElementById('placa').value = carro.placa;
-		document.getElementById('valor_dia').value = carro.valorDia;
-		document.getElementById('valor_km').value = carro.valorKm;
-	}
+        document.getElementById('carro_id').value = carro.codigo;
+        document.getElementById('fabricante').value = carro.fabricante;
+        document.getElementById('modelo').value = carro.modelo;
+        document.getElementById('ano').value = carro.ano;
+        document.getElementById('cor').value = carro.cor;
+        document.getElementById('placa').value = carro.placa;
+        document.getElementById('valor_dia').value = carro.valorDia;
+        document.getElementById('valor_km').value = carro.valorKm;
+    }
 
-	function removeCarro(li, carro) {
-		if(window.confirm('Confirma a exclusão do registro?')) {
-			remove(li);
-			carros.splice(carros.indexOf(carro),1);
-			AppCarro.persisteCarros();
-		}
-	}
+    function removeCarro(li, carro) {
+        if(window.confirm('Confirma a exclusão do registro?')) {
+            remove(li);
+            carros.splice(carros.indexOf(carro),1);
+            AppCarro.persisteCarros();
+            AppCarro.mostraNotificacao('Cadastro de Carros', 'Carro removido com sucesso', 'success');
+        }
+    }
 
     controller.atualizaItem = function(tr, carro) {
         tr.children[0].innerHTML = carro.fabricante == undefined ? '' : carro.fabricante;
@@ -101,43 +103,43 @@ function CarroController(elem, carros) {
     }
 
     function filtraPlaca(event) {
-		var inputPlaca = document.getElementById('placa');
-		var regex = /([A-Za-z]{1,3}[0-9]{1,4})/;
+        var inputPlaca = document.getElementById('placa');
+        var regex = /([A-Za-z]{1,3}[0-9]{1,4})/;
 
-		var result = regex.exec(inputPlaca.value);
+        var result = regex.exec(inputPlaca.value);
 
-		if(result !== null || inputPlaca.value.length <= 7)
-			inputPlaca.value = result[1].toUpperCase();
-		else
-			inputPlaca.value = '';
+        if(result !== null || inputPlaca.value.length <= 7)
+            inputPlaca.value = result[1].toUpperCase();
+        else
+            inputPlaca.value = '';
 
-	}
+    }
 
-	function filtraAno(event) {
-		var inputAno = document.getElementById('ano');
-		var regex = /([0-9]{1,4})/;
+    function filtraAno(event) {
+        var inputAno = document.getElementById('ano');
+        var regex = /([0-9]{1,4})/;
 
-		var result = regex.exec(inputAno.value);
-		if(result !== null)
-			inputAno.value = result[1];
-		else
-			inputAno.value = '';
-	}
+        var result = regex.exec(inputAno.value);
+        if(result !== null)
+            inputAno.value = result[1];
+        else
+            inputAno.value = '';
+    }
 
-	function somenteNumeros(event) {
-		var el = event.currentTarget;
-		if(el.value == '')
-			return;
+    function somenteNumeros(event) {
+        var el = event.currentTarget;
+        if(el.value == '')
+            return;
 
-		var regex = /^([0-9]{0,5})+(\.[1-9]{0,2})?$/;
+        var regex = /^([0-9]{0,5})+(\.[1-9]{0,2})?$/;
 
-		var result = regex.exec(el.value);
-		if(result !== null)
-			el.value = result[0];
-		else
-			el.value = el.value.substring(0, el.value.length-1);
+        var result = regex.exec(el.value);
+        if(result !== null)
+            el.value = result[0];
+        else
+            el.value = el.value.substring(0, el.value.length-1);
 
-	}
+    }
 
     function init() {
         carregaCarros();

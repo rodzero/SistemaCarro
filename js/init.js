@@ -15,6 +15,11 @@ function init() {
     loadScript('js/Geocoder.js');
     loadScript('bower_components/jquery/dist/jquery.js', function() {
         loadScript('bower_components/bootstrap/dist/js/bootstrap.js');
+
+        loadScript('bower_components/pnotify/dist/pnotify.js', function() {
+            PNotify.prototype.options.styling = 'bootstrap3';
+        });
+
         loadScript('js/jquery-ui/jquery-ui.js', function() {
             $('#dateInicio').datepicker({
                 dateFormat: 'dd-mm-yy'

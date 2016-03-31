@@ -6,7 +6,7 @@
     "rules": {
         "indent": [
             2,
-            "tab"
+            4
         ],
         "linebreak-style": [
             "error",
@@ -20,5 +20,16 @@
             "error",
             "always"
         ]
+    },
+    "globals": {
+        "AppCarro": true,
+        "TPC": true,
+        "Carro": true,
+        "PNotify": true,
+        "$": true,
+        "idSimulacao": true,
+        "Geocoder": true,
+        "google": true,
+        "Simulacao": true
     }
 }

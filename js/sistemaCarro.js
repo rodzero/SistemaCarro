@@ -25,7 +25,7 @@ var AppCarro = (function SistemaCarro() {
 		carroController = new CarroController(lista, carros);
 
 		var listaSimulacoes = document.getElementById('listaSimulacoes');
-		simulacaoController = new SimulacaoController(listaSimulacoes, simulacoes);
+		simulacaoController = new SimulacaoController(listaSimulacoes);
 	}
 
 	app.init = function() {
@@ -81,6 +81,23 @@ var AppCarro = (function SistemaCarro() {
 
 		return undefined;
 	};
+
+	app.mostraNotificacao = function(titulo, texto, tipo = 'info') {
+		var notice = new PNotify({
+			title: titulo,
+			text: texto,
+			type: tipo,
+			animate_speed: 'fast',
+			buttons: {
+				closer: false,
+				sticker: false
+			}
+		});
+
+		notice.get().click(function() {
+			notice.remove();
+		});
+	}
 
 	return app;
 })();
