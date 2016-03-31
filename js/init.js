@@ -15,6 +15,14 @@ function init() {
     loadScript('js/Geocoder.js');
     loadScript('bower_components/jquery/dist/jquery.js', function() {
         loadScript('bower_components/bootstrap/dist/js/bootstrap.js');
+        loadScript('js/jquery-ui/jquery-ui.js', function() {
+            $('#dateInicio').datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+            $('#dateFim').datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+        });
     });
     loadScript('js/carro.js');
     loadScript('js/simulacao.js');

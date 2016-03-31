@@ -20,7 +20,13 @@ function Simulacao(codCarro, cliNome, op, dtInicio, dtFim, ori, dst) {
             return 'Calculando...';
         }
         else {
-            return AppCarro.getCarro(s.carroEscolhido).valorDia * (s.dateFim - s.dateInicio);
+            var dInicio = new Date(s.dateInicio.split('-')[2], s.dateInicio.split('-')[1], s.dateInicio.split('-')[0], 0, 0, 0);
+            var dFim = new Date(s.dateFim.split('-')[2], s.dateFim.split('-')[1], s.dateFim.split('-')[0], 0, 0, 0);
+
+            var timeDiff = Math.abs(dFim.getTime() - dInicio.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            return AppCarro.getCarro(s.carroEscolhido).valorDia * diffDays;
         }
     })(simulacao);
 

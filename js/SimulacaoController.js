@@ -76,11 +76,13 @@ function SimulacaoController(elem, simulacoes) {
 	}
 
 	function init() {
-		getLocalizacao();
-		controller.opcaoDiasRb.addEventListener('click', atualizaViewOpcao, false);
-		controller.opcaoKmRb.addEventListener('click', atualizaViewOpcao, false);
-		preencheCarros();
+		controller.opcaoDiasRb.addEventListener('change', atualizaViewOpcao, false);
+		controller.opcaoKmRb.addEventListener('change', atualizaViewOpcao, false);
 		controller.btnAdicionarSimulacao.addEventListener('click', novaSimulacao, false);
+
+		atualizaViewOpcao();
+		getLocalizacao();
+		preencheCarros();
 		controller.carregaSimulacoes();
 
 		return controller;
