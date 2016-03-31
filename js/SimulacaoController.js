@@ -1,20 +1,20 @@
+'use strict';
 function SimulacaoController(elem, simulacoes) {
-	this.lista = elem;
-	init();
-	this.preencheCarros = preencheCarros;
+	var controller = {};
 
-	function init() {
-		getLocalizacao();
+	controller.lista = elem;
 
-		var opcaoDiasRb = document.getElementById('opcaoDias');
-		var opcaoKmRb = document.getElementById('opcaoKm');
+	controller.opcaoDiasRb = document.getElementById('opcaoDias');
+	controller.opcaoKmRb = document.getElementById('opcaoKm');
+	controller.carroDd = document.getElementById('carroEscolhido');
+	controller.edtNomeCliente = document.getElementById('nomeCliente');
+	controller.edtOrigem = document.getElementById('origem');
+	controller.edtDestino = document.getElementById('destino');
+	controller.edtDataInicio = document.getElementById('dateInicio');
+	controller.edtDataFim = document.getElementById('dateFim');
+	controller.btnAdicionarSimulacao = document.getElementById('btnAdicionarSimulacao');
 
-		addEventListener('click', atualizaViewOpcao, opcaoDiasRb);
-		addEventListener('click', atualizaViewOpcao, opcaoKmRb);
-
-		var carroDd = document.getElementById('carroEscolhido');
-		preencheCarros();
-	};
+	controller.preencheCarros = preencheCarros;
 
 	function preencheCarros() {
 		var carros = AppCarro.getCatalog();
@@ -74,4 +74,73 @@ function SimulacaoController(elem, simulacoes) {
 
 		navigator.geolocation.getCurrentPosition(successCallback,errorCallback,options);
 	}
+
+	function init() {
+		getLocalizacao();
+		controller.opcaoDiasRb.addEventListener('click', atualizaViewOpcao, false);
+		controller.opcaoKmRb.addEventListener('click', atualizaViewOpcao, false);
+		preencheCarros();
+		controller.btnAdicionarSimulacao.addEventListener('click', novaSimulacao, false);
+		controller.carregaSimulacoes();
+
+		return controller;
+	};
+
+	function novaSimulacao() {
+		var codCarro = controller.carroDd.options[controller.carroDd.selectedIndex].value;
+		var cliNome = controller.edtNomeCliente.value;
+
+		var ori = controller.edtOrigem.value;
+		var dst = controller.edtDestino.value;
+
+		var op = document.querySelector('input[name="opcao"]:checked').value;
+
+		var dtInicio = controller.edtDataInicio.value;
+		var dtFim = controller.edtDataFim.value;
+
+		var simulacao = new Simulacao(codCarro, cliNome, op, dtInicio, dtFim, ori, dst);
+
+		AppCarro.getSimulacoes().push(simulacao);
+		AppCarro.persisteSimulacoes();
+	}
+
+	controller.carregaSimulacoes = function() {
+        controller.lista.textContent = '';
+		var simulacoes = AppCarro.getSimulacoes();
+        for(var i = 0 ; i < simulacoes.length ; i++) {
+            controller.adicionaSimulacaoLista(simulacoes[i]);
+        }
+    }
+
+	controller.adicionaSimulacaoLista = function(simulacao) {
+        var modelo = document.getElementById('simulacaoListItem');
+        var copia = modelo.content.firstElementChild.cloneNode(true);
+        TPC.replaceWithData(copia, simulacao);
+
+        var spanDelete = copia.getElementsByClassName('deleta-simulacao')[0];
+        spanDelete.addEventListener('click', function() { removeSimulacao(copia, simulacao); }, false);
+
+        controller.lista.appendChild(copia);
+    };
+
+	function removeSimulacao(li, simulacao) {
+		var simulacoes = AppCarro.getSimulacoes();
+
+		if(window.confirm('Confirma a exclusão do registro?')) {
+			controller.lista.removeChild(li);
+			simulacoes.splice(simulacoes.indexOf(simulacao),1);
+			AppCarro.persisteSimulacoes();
+		}
+	}
+
+	controller.limpaCampos = function() {
+		this.edtNomeCliente.value = '';
+		this.edtDataInicio.value = '';
+		this.edtDataFim.value = '';
+		this.edtDestino.value = '';
+
+		this.carroDd.selectedIndex = 0;
+	}
+
+	return init();
 }

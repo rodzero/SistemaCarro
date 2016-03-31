@@ -1,7 +1,5 @@
-var codigo = 1;
-
 function Carro(fab, mod, ano, cor, placa, valorDia, valorKm) {
-	this.codigo = codigo++;
+	this.codigo = AppCarro.getCodigoCarro();
 	this.fabricante = fab;
 	this.modelo = mod;
 	this.ano = ano;

@@ -8,128 +8,79 @@ var AppCarro = (function SistemaCarro() {
 	var carroController;
 	var simulacaoController;
 
-	function salvarCarro(event) {
-		if(document.getElementById('carro_id').value != '') {
-			var carro = carros[document.getElementById('carro_id').value];
-
-			carro.fabricante = document.getElementById('fabricante').value;
-			carro.modelo = document.getElementById('modelo').value;
-			carro.ano = document.getElementById('ano').value;
-			carro.cor = document.getElementById('cor').value;
-			carro.placa = document.getElementById('placa').value;
-			carro.valorDia = document.getElementById('valor_dia').value;
-			carro.valorKm = document.getElementById('valor_km').value;
-
-			var li = document.getElementById('lista').children[document.getElementById('carro_id').value];
-			carroController.atualizaItem(li, carro);
-		}
-		else {
-			var novoCarro = new Carro(
-				document.getElementById('fabricante').value,
-				document.getElementById('modelo').value,
-				document.getElementById('ano').value,
-				document.getElementById('cor').value,
-				document.getElementById('placa').value,
-				document.getElementById('valor_dia').value,
-				document.getElementById('valor_km').value
-				);
-
-			carros.push(novoCarro);
-			carroController.add(novoCarro);
-		}
-
-		app.persisteCarros();
-		carroController.limpaCampos();
-	};
-
-	app.persisteCarros = function() {
-		var jsonCarros = JSON.stringify(carros);
-		Storage.setItem('carros', jsonCarros);
-	};
-
-	function filtraPlaca(event) {
-		var inputPlaca = document.getElementById('placa');
-		var regex = /([A-Za-z]{1,3}[0-9]{1,4})/;
-
-		var result = regex.exec(inputPlaca.value);
-
-		if(result !== null || inputPlaca.value.length <= 7)
-			inputPlaca.value = result[1].toUpperCase();
-		else
-			inputPlaca.value = '';
-
-	}
-
-	function filtraAno(event) {
-		var inputAno = document.getElementById('ano');
-		var regex = /([0-9]{1,4})/;
-
-		var result = regex.exec(inputAno.value);
-		if(result !== null)
-			inputAno.value = result[1];
-		else
-			inputAno.value = '';
-	}
-
-	function somenteNumeros(event) {
-		var el = event.currentTarget;
-		if(el.value == '')
-			return;
-
-		var regex = /^([0-9]{0,5})+(\.[1-9]{0,2})?$/;
-
-		var result = regex.exec(el.value);
-		if(result !== null)
-			el.value = result[0];
-		else
-			el.value = el.value.substring(0, el.value.length-1);
-
-	}
-
 	function init() {
-
-		if(sessionStorage.getItem('carros'))
-			carros = JSON.parse(sessionStorage.getItem('carros'));
+		if(Storage.getItem('carros')) {
+			carros = JSON.parse(Storage.getItem('carros'));
+		}
 		 else
 		 	carros = [];
 
-		var btSalvarCarro = document.getElementById('salvar');
-		var btCancelar = document.getElementById('cancelar');
-		var edtPlaca = document.getElementById('placa');
-		var edtAno = document.getElementById('ano');
-		var edtValorDia = document.getElementById('valor_dia');
-		var edtValorKm = document.getElementById('valor_km');
+		if(Storage.getItem('simulacoes')) {
+			simulacoes = JSON.parse(Storage.getItem('simulacoes'));
+		}
+		 else
+		 	simulacoes = [];
 
-		var lista = document.getElementById('lista');
-		var listaSimulacoes = document.getElementById('listaSimulacoes');
-
+		var lista = document.getElementById('listaCarros');
 		carroController = new CarroController(lista, carros);
+
+		var listaSimulacoes = document.getElementById('listaSimulacoes');
 		simulacaoController = new SimulacaoController(listaSimulacoes, simulacoes);
-
-		edtPlaca.addEventListener('keyup', filtraPlaca, false);
-		edtAno.addEventListener('keyup', filtraAno, false);
-
-		edtValorDia.addEventListener('keyup', somenteNumeros, false);
-		edtValorKm.addEventListener('keyup', somenteNumeros, false);
-
-		btSalvarCarro.addEventListener('click', salvarCarro, false);
-		btCancelar.addEventListener('click', carroController.limpaCampos, false);
 	}
 
 	app.init = function() {
 		init();
 	};
+
 	app.getCatalog = function() {
 		return carros;
 	};
+
+	app.getSimulacoes = function() {
+		return simulacoes;
+	};
+
+	app.persisteSimulacoes = function() {
+		var jsonSimulacoes = JSON.stringify(simulacoes);
+		Storage.setItem('simulacoes', jsonSimulacoes);
+		Storage.setItem('idSimulacao', parseInt(app.getIdSimulacao())+1);
+
+		simulacaoController.limpaCampos();
+		simulacaoController.carregaSimulacoes();
+	};
+
+	app.persisteCarros = function() {
+		var jsonCarros = JSON.stringify(carros);
+		Storage.setItem('carros', jsonCarros);
+		Storage.setItem('codigoCarro', parseInt(app.getCodigoCarro())+1);
+		simulacaoController.preencheCarros();
+
+		carroController.limpaCampos();
+		carroController.carregaCarros();
+	};
+
+	app.getIdSimulacao = function() {
+		if(Storage.getItem('idSimulacao'))
+			return Storage.getItem('idSimulacao');
+		else
+			return 1;
+	};
+
+	app.getCodigoCarro = function() {
+		if(Storage.getItem('codigoCarro'))
+			return Storage.getItem('codigoCarro');
+		else
+			return 1;
+	};
+
 	app.getCarro = function(codigo) {
 		for (var i = 0; i < carros.length; i++) {
 			if(carros[i].codigo == codigo)
 			return carros[i];
 		}
-		
+
 		return undefined;
-	}
+	};
 
 	return app;
 })();
