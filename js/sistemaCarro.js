@@ -3,7 +3,7 @@ var AppCarro = (function SistemaCarro() {
 	var app = {};
 	var carros = [];
 	var simulacoes = [];
-	var Storage = window.sessionStorage;
+	var Storage = window.localStorage;
 
 	var carroController;
 	var simulacaoController;
