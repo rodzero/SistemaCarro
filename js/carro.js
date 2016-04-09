@@ -1,5 +1,5 @@
 function Carro(fab, mod, ano, cor, placa, valorDia, valorKm) {
-    this.codigo = AppCarro.getCodigoCarro;
+    this.codigo = AppCarro.getCodigoCarro();
     this.fabricante = fab;
     this.modelo = mod;
     this.ano = ano;
@@ -13,6 +13,6 @@ function Carro(fab, mod, ano, cor, placa, valorDia, valorKm) {
     })(placa);
 
     this.toString = function() {
-        return this.fabricante + ' ' + this.modelo + ' ' + this.ano + ' ' + this.cor + ' ' + '(' + this.placa + ')';
+        return this.codigo + ' ' + this.fabricante + ' ' + this.modelo + ' ' + this.ano + ' ' + this.cor + ' ' + '(' + this.placa + ')';
     };
 }
