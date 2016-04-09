@@ -82,7 +82,10 @@ var AppCarro = (function SistemaCarro() {
 		return undefined;
 	};
 
-	app.mostraNotificacao = function(titulo, texto, tipo = 'info') {
+	app.mostraNotificacao = function(titulo, texto, tipo) {
+        if(!tipo)
+            tipo = 'info';
+
 		var notice = new PNotify({
 			title: titulo,
 			text: texto,
