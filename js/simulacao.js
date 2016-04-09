@@ -23,8 +23,11 @@ function Simulacao(codCarro, cliNome, op, dtInicio, dtFim, ori, dst) {
             var dInicio = new Date(s.dateInicio.split('-')[2], s.dateInicio.split('-')[1], s.dateInicio.split('-')[0], 0, 0, 0);
             var dFim = new Date(s.dateFim.split('-')[2], s.dateFim.split('-')[1], s.dateFim.split('-')[0], 0, 0, 0);
 
+
             var timeDiff = Math.abs(dFim.getTime() - dInicio.getTime());
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            s.distancia = diffDays;
 
             return AppCarro.getCarro(s.carroEscolhido).valorDia * diffDays;
         }
@@ -36,9 +39,19 @@ function Simulacao(codCarro, cliNome, op, dtInicio, dtFim, ori, dst) {
     })(simulacao.carroEscolhido);
 
     function setaValor(s, distancia) {
-        var valorF = distancia * AppCarro.getCarro(s.carroEscolhido).valorKm;
+        var valorF = distancia * AppCarro.getCarro(s.carroEscolhido).valorKm;        
+        if (distancia == null){
+
+          AppCarro.mostraNotificacao('Simulações', 'Localização inválida', 'error');
+          return ;
+        }
         s.valor = parseFloat(valorF).toFixed(2);
+        s.distancia = distancia;
+
+
+        AppCarro.getSimulacoes().push(simulacao);
         AppCarro.persisteSimulacoes();
+        AppCarro.mostraNotificacao('Simulações', 'Simulação salva com sucesso', 'success');
     }
 
     return simulacao;

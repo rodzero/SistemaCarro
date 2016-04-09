@@ -34,9 +34,9 @@ var Geocoder = (function Geocoder() {
             if (status == google.maps.DirectionsStatus.OK) {
                 distancia = result.routes[0].legs[0].distance.value / 1000;
             }
-            else {
-                AppCarro.mostraNotificacao('Simulação', 'Erro ao calcular distância', 'error');
-            }
+            // else {
+            //     AppCarro.mostraNotificacao('Simulação', 'Erro ao calcular distância', 'error');
+            // }
 
             callback(obj, distancia);
         });

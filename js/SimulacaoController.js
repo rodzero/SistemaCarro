@@ -101,9 +101,16 @@ function SimulacaoController(elem) {
 
         var simulacao = new Simulacao(codCarro, cliNome, op, dtInicio, dtFim, ori, dst);
 
-        AppCarro.getSimulacoes().push(simulacao);
-        AppCarro.persisteSimulacoes();
-        AppCarro.mostraNotificacao('Simulações', 'Simulação salva com sucesso', 'success');
+        if (op=='dias'){
+            if (dtFim < dtInicio){
+              AppCarro.mostraNotificacao('Simulações', 'Data final maior que inicial', 'error');
+            }else{
+              AppCarro.getSimulacoes().push(simulacao);
+              AppCarro.persisteSimulacoes();
+              AppCarro.mostraNotificacao('Simulações', 'Simulação salva com sucesso', 'success');
+            }
+        }
+
     }
 
     controller.carregaSimulacoes = function() {
